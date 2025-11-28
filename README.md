@@ -1,20 +1,52 @@
-# Intro
+# Generative Learning of Differentiable Object Models for Compositional Interpretation of Complex Scenes
 
-This repository contains the implementation of the DVP+ method presented in "Generative Learning of Differentiable Object Models for Compositional Interpretation of Complex Scenes", a manuscript submitted to NeurIPS'25 [https://openreview.net/forum?id=7fyjBHx5Ac](https://openreview.net/forum?id=7fyjBHx5Ac) alongside with the MDS-HR benchmark introduced therein.
+**Accepted at the [NeurIPS 2025 Workshop on SPACE in Vision, Language, and Embodied AI (SpaVLE)](https://space-in-vision-language-embodied-ai.github.io/)**
 
-# Installation
+This repository contains the official implementation of the DVP+ method and the MDS-HR benchmark dataset introduced in the paper _Generative Learning of Differentiable Object Models for Compositional Interpretation of Complex Scenes_. The preprint is available at: [https://arxiv.org/abs/2506.08191](https://arxiv.org/abs/2506.08191).
+
+<div align="center">
+  <img src="DVP+.svg" alt="Figure 1: DVP+ Method Overview" width="100%">
+  <br>
+  <em>Figure 1: <strong>Overview of the DVP+ architecture.</strong> The model disentangles complex scenes into interpretable object-centric representations and reconstructs the input via a differentiable rendering pipeline.</em>
+</div>
+
+---
+
+## 💾 Dataset (MDS-HR)
+
+The dataset is hosted directly within this repository using Git LFS. Alternatively, if you wish to generate the dataset from scratch, you can execute the `notebooks/dataset_generator.ipynb` notebook.
+
+## 🛠️ Installation
 
 We assume python 3.10 is installed.
+
+#### Environment Setup
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
+```
+
+#### Install Dependencies
+
+```sh
+# Core Python libraries
 pip install fvcore ipykernel tensorboard transformers ipywidgets seaborn shapely opencv-python scikit-learn-extra scikit-image numpy==1.26.4
+
+# PyTorch and xFormers (CUDA 12.1)
 pip install torch==2.1.1 torchvision==0.16.1 --index-url https://download.pytorch.org/whl/cu121
 pip install xformers==0.0.23 --index-url https://download.pytorch.org/whl/cu121
-pip install --no-index --no-cache-dir pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py310_cu121_pyt211/download.html
-pip install ./torch_earcut/ ./lcmr/ ./lcmr-ext/
 
+# PyTorch3D
+pip install --no-index --no-cache-dir pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py310_cu121_pyt211/download.html
+
+# Local modules
+pip install ./torch_earcut/ ./lcmr/ ./lcmr-ext/
+```
+
+#### Install Baselines (MONet & LIVE)
+
+```sh
 # MONet
 cd notebooks
 git clone https://github.com/addtt/object-centric-library
@@ -34,16 +66,26 @@ cd LIVE-Layerwise-Image-Vectorization/LIVE
 ./LIVE_runner.sh
 ```
 
-# Getting the Dataset
+## 🚀 Usage
 
-You can either generate the dataset or download a pre-existing version:
-*   **To generate:** Execute the `notebooks/dataset_generator.ipynb` notebook.
-*   **To download:** Access it via OSF: [https://osf.io/pwhd7/?view_only=60ad0f39814b49eda85a61a86f60fae0](https://osf.io/pwhd7/?view_only=60ad0f39814b49eda85a61a86f60fae0)
+#### Model Training
+Training notebooks for each specific DVP+ configuration can be found in the `notebooks/` directory.
 
-# Model Training
+#### Experiments & Evaluation
 
-For each trainable DVP+ configuration, a specific training notebook is provided within the `notebooks/` directory.
+To reproduce the experiments and results reported in the paper uoy can execute `notebooks/test.ipynb` notebook.
 
-# Running Experiments
+## 🖊️ Citation
 
-The `notebooks/test.ipynb` notebook allows you to reproduce all experiments reported in the paper.
+If you find this code or dataset useful for your research, please cite our paper:
+
+```
+@inproceedings{
+  nowinowski2025generativelearningdifferentiableobject,
+  title={Self-Augmented Learning of Differentiable Object Models for Compositional Interpretation of Complex Scenes},
+  author={Antoni Nowinowski and Krzysztof Krawiec},
+  booktitle={NeurIPS 2025 Workshop on Space in Vision, Language, and Embodied AI},
+  year={2025},
+  url={https://arxiv.org/abs/2506.08191}
+}
+```
